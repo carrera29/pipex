@@ -6,7 +6,7 @@
 /*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:22:42 by clcarre           #+#    #+#             */
-/*   Updated: 2022/06/20 14:49:12 by clcarre          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:52:53 by clcarre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-int execve(const char *path, char *const argv[], char *envp[]);
-// dirección path del comando, comando a ejecutar, 
 
 int	ft_find_path(int envp)
 {
