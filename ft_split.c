@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
+/*   By: chloeplatt <chloeplatt@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:04:41 by clcarre           #+#    #+#             */
-/*   Updated: 2022/06/24 11:30:50 by clcarre          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:01:52 by chloeplatt       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "pipex.h"
 
 void	free_split(char **s)
 {
