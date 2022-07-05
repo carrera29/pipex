@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   find_path.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: chloeplatt <chloeplatt@student.42.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 12:15:17 by clcarre           #+#    #+#             */
-/*   Updated: 2022/06/29 11:07:25 by chloeplatt       ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "pipex.h"
 
@@ -70,7 +59,8 @@ char	*ft_find_path(char *cmd, char *envp[])
 			x.path = ft_split_path(x.split_cmd[0], &envp[x.i][5]);
 			while (access(x.path, 0) != 0 && x.path)
 			{
-				ft_bzero(x.path, ft_strlen(x.path));
+				// printf("El path probado y no correcto es: %s\n", x.path);
+				free(x.path);
 				x.path = ft_split_path(x.split_cmd[0], &envp[x.i][5]);
 			}
 			free(x.split_cmd);
@@ -84,6 +74,6 @@ char	*ft_find_path(char *cmd, char *envp[])
 // {
 // 	char	*cmd = "ls -l";
 
-// 	printf("El path es: %s\n", ft_find_path(env, cmd));
+// 	printf("El path correcto para '%s' es: %s\n", cmd, ft_find_path(cmd, env));
 // 	return (0);
 // }
