@@ -1,7 +1,7 @@
 
 #include "pipex.h"
 
-char	*ft_strjoin(char const *s1, char const *s2, char x)
+static char	*ft_strjoin(char const *s1, char const *s2, char x)
 {
 	char	*str;
 	int		i;
@@ -30,7 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2, char x)
 	return (str);
 }
 
-char	*ft_split_path(char *cmd, char	*envp)
+static char	*ft_split_path(char *cmd, char	*envp)
 {
 	t_pipex	x;
 	static int	i;

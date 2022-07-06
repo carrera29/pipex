@@ -1,25 +1,22 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
+#include <stdio.h>		// perror() && printf()
+#include <stdlib.h>		// malloc()	&& free()
+#include <unistd.h>		// access() && close() && pipe() && fork() && dup2() && waitpid()
+#include <sys/wait.h>	// open()
+#include <fcntl.h>		// file control options
 
 typedef struct	s_pipex
 {
 	int		i;
-	int		tub[2];
+	int		pipe_1_[2];
+	int		pipe_2_[2];
 	int		infile;
 	int		outfile;
 	int		status;
-	pid_t	id_hijo_1;
-	pid_t	id_hijo_2;
+	pid_t	id_child_1;
+	pid_t	id_child_2;
 	char	*path;
 	char	**split_path;
 	char	**split_cmd;
@@ -27,15 +24,9 @@ typedef struct	s_pipex
 
 // FIND PATH
 char				*ft_find_path(char *cmd, char *env[]);
-char				*ft_split_path(char *cmd, char	*env);
-char				*ft_strjoin(char const *s1, char const *s2, char x);
 
 // SPLIT
 char				**ft_split(char const *s, char c);
-// static char			**ft_str(char **split, char const *s, char c);
-// static char			*ft_write(char *split, const char *s, int count, int i);
-// static unsigned int	ft_division(char const *s, char c);
-// void					free_split(char **s);
 
 // UTILS
 size_t				ft_strlen(const char *s);

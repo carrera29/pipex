@@ -1,7 +1,7 @@
 NAME  	= pipex.a 
 LIB 	= ar -rcs
 
-SRC		= find_path.c ft_split.c pipex.c utils.c
+SRC		= find_path.c split.c pipex.c utils.c
 
 OBJS 	= $(SRC:.c=.o)
 
