@@ -1,60 +1,84 @@
-#include <stdio.h>		// perror() && printf()
-#include <stdlib.h>		// malloc()	&& free()
-#include <unistd.h>		// access() && close() && pipe() && fork() && dup2() && waitpid()
-#include <sys/wait.h>	// open()
-#include <fcntl.h>	
+#include "pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+void	close_pipes(int fd[][2])
 {
-	int	pipe1[2];//		child 	->	parent
-	int pipe2[2];//		parent	->	child
-	int	id_hijo_1;
-	int	id_hijo_2;
-	int	i;
+	close(*fd[0]);
+	close(*fd[1]);
+}
 
-	if (pipe(pipe1) == -1)
-		perror("error pipe(1)");
-	if (pipe(pipe2) == -1)
-		perror("error pipe(1)");
-	id_hijo_1 = fork();
-	if (id_hijo_1 < 0)
-		perror("error fork(1)");
-	i = 0;
-	if (id_hijo_1 == 0)
+void	child_process(t_pipex p, int fd[][2], int i, char **argv, int argc, char **envp)
+{
+	int c;
+
+	c = 0;
+	if (i == 0)
 	{
-		int	x;
-		int	y;
-
-		close(pipe1[0]);
-		close(pipe2[1]);
-		printf("Escribe el numero a multiplicar\n");
-		scanf("%d", &x);
-		write(pipe1[1], &x, sizeof(int));
-		read(pipe2[0], &y, sizeof(int)) > 0);
-		close(pipe1[1]);
-		close(pipe2[0]);	
+		close(fd[i][0]);
+		while (c++ < (argc - 3))
+			close_pipes(&fd[c]);
+		dup2(p.infile, 0);
+		dup2(fd[i][1], 1);
+	}
+	else if (i == argc - 4)
+	{
+		close(fd[i-1][1]);
+		while (c++ < (i - 1))
+			close_pipes(&fd[c]);
+		dup2(fd[i-1][0], 0);
+		dup2(p.outfile, 1);
 	}
 	else
 	{
-		close(pipe1[1]);
-		close(pipe2[0]);
-		id_hijo_2 = fork();
-		if (id_hijo_2 == -1)
-			perror("error fork(1)");
-		else if (id_hijo_2 == 0)
-		{
-			int	z;
-			int	w;
+		close(fd[i][0]);
+		close(fd[i-1][1]);
+		while (c++ < (i - 1))
+			close_pipes(&fd[c]);
+		dup2(fd[i-1][0], 0);
+		dup2(fd[i][1], 1);
+	}
+	execve(ft_find_path(argv[i+2], envp), ft_split(argv[i+2], ' '), envp);
+}
 
-			read(pipe1[0], &z, sizeof(int));
-			printf("Escribe el otro numero a multiplicar\n");
-			scanf("%d", &w);
-			z = z * w;
-			write(pipe2[1], &z, sizeof(int));
-		}
-		close(pipe1[0]);
-		close(pipe2[1]);
-		wait(NULL);
-	};
-	return(0);
+void	multi_pipex(t_pipex p, int argc, char **argv, char **envp)
+{
+	int	fd[argc-4][2];
+	int	id[argc-3];
+	int	i;
+	
+	i = 0;
+	while (i < (argc - 4))
+	{
+		if (pipe(fd[i++]) < 0)
+			perror("pipe() error");
+	}
+	i = 0;
+	while (i < (argc - 3))
+	{
+		id[i] = fork();
+		if (id[i] < 0)
+			perror("fork() error");
+		else if (id[i] == 0)
+			child_process(p, fd, i, argv, argc, envp);
+		i++;
+	}
+	waitpid(id[i], NULL, 0);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_pipex	p;
+
+	if (argc > 4)
+	{
+		p.infile = open(argv[1], O_RDONLY);
+		p.outfile = open(argv[argc - 1], O_CREAT | O_CREAT | O_WRONLY, 0644);
+		if (p.infile < 0 || p.outfile < 0)
+			perror("file error");
+		multi_pipex(p, argc, argv, envp);
+		close(p.infile);
+		close(p.outfile);
+	}
+	else
+		perror("Wrong number of arguments");
+	return (0);
 }
