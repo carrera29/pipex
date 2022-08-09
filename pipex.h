@@ -1,20 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/02 15:07:16 by clcarre           #+#    #+#             */
+/*   Updated: 2022/08/09 10:36:01 by clcarre          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdio.h>		// perror() && printf()
-#include <stdlib.h>		// malloc()	&& free()
-#include <unistd.h>		// access() && close() && pipe() && fork() && dup2() && waitpid()
-#include <sys/wait.h>	// open()
-#include <fcntl.h>		// file control options
+# include <stdio.h>		// perror(), printf()
+# include <stdlib.h>	// malloc(), free()
+# include <unistd.h>	// access(), close(), pipe(), fork(), dup2(), waitpid()
+# include <sys/wait.h>	// open()
+# include <fcntl.h>		// file control options
 
-typedef struct	s_pipex
+typedef struct s_pipex
 {
 	int		i;
-	int		pipe_1_[2];
-	int		pipe_2_[2];
+	int		pipe[2];
 	int		infile;
 	int		outfile;
-	int		status;
 	pid_t	id_child_1;
 	pid_t	id_child_2;
 	char	*path;

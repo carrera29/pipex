@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_path.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/02 16:59:05 by clcarre           #+#    #+#             */
+/*   Updated: 2022/08/09 10:52:00 by clcarre          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
@@ -9,7 +20,6 @@ static char	*ft_strjoin(char const *s1, char const *s2, char x)
 
 	if (!s1 || !s2)
 		return (0);
-	
 	i = ft_strlen(s1) + ft_strlen(s2) + 1;
 	str = malloc(sizeof(char) * i + 1);
 	if (!str)
@@ -32,7 +42,7 @@ static char	*ft_strjoin(char const *s1, char const *s2, char x)
 
 static char	*ft_split_path(char *cmd, char	*envp)
 {
-	t_pipex	x;
+	t_pipex		x;
 	static int	i;
 
 	if (!envp || !cmd)
@@ -59,7 +69,6 @@ char	*ft_find_path(char *cmd, char *envp[])
 			x.path = ft_split_path(x.split_cmd[0], &envp[x.i][5]);
 			while (access(x.path, 0) != 0 && x.path)
 			{
-				// printf("El path probado y no correcto es: %s\n", x.path);
 				free(x.path);
 				x.path = ft_split_path(x.split_cmd[0], &envp[x.i][5]);
 			}
