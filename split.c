@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chloeplatt <chloeplatt@student.42.fr>      +#+  +:+       +#+        */
+/*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:04:41 by clcarre           #+#    #+#             */
-/*   Updated: 2022/07/06 09:17:20 by chloeplatt       ###   ########.fr       */
+/*   Updated: 2022/08/09 11:32:35 by clcarre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static char	*ft_write(char *split, const char *s, int count, int i)
 
 	split = (char *)malloc(sizeof(char) * (count + 1));
 	if (!split)
-		return (0);
+	{
+		free_split(&split);
+		return (NULL);
+	}
 	x = 0;
 	i = i - count;
 	while (count)
@@ -85,11 +88,6 @@ static char	**ft_str(char **split, char const *s, char c)
 				count++;
 			}
 			split[ii] = ft_write(split[ii], s, count, i);
-			if (!split[ii])
-			{
-				free_split(&split[ii]);
-				return (NULL);
-			}
 			count = 0;
 			ii++;
 		}
