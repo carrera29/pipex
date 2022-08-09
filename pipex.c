@@ -6,7 +6,7 @@
 /*   By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 15:09:42 by clcarre           #+#    #+#             */
-/*   Updated: 2022/08/09 10:59:09 by clcarre          ###   ########.fr       */
+/*   Updated: 2022/08/09 11:38:27 by clcarre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int	main(int argc, char **argv, char **envp)
 		close(p.outfile);
 	}
 	else
-		perror("error number of arguments");
+		perror("wrong number of arguments");
 	return (0);
 }

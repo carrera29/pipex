@@ -6,7 +6,7 @@
 #    By: clcarre <clcarrer@student.42madrid.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 10:34:09 by clcarre           #+#    #+#              #
-#    Updated: 2022/08/09 10:35:39 by clcarre          ###   ########.fr        #
+#    Updated: 2022/08/09 11:58:10 by clcarre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,17 @@ CFLAGS 	= -Wall -Wextra -Werror
 $(NAME) : $(OBJS)
 	$(LIB) $(NAME) $(OBJS)
 
-.c.o :
-	gcc $(CFLAGS) -c $< -o $(<:.c=.o)
+pipex 	:
+	gcc pipex.c pipex.a
 
-all : $(NAME)
+all		: $(NAME)
 
-clean : 
+clean 	: 
 	rm -f $(OBJS)
 
-fclean : clean
+fclean 	: clean
 	rm -f $(NAME)
 
-re : fclean all
+re 		: fclean all
 
-.PHONY : all clean fclean re
+.PHONY 	: all clean fclean re
